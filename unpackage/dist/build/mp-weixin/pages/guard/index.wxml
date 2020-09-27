@@ -1,0 +1,1 @@
+<view class="content">开门<u-tabbar vue-id="481d97e7-1" list="{{vuex_tabbar}}" mid-button="{{true}}" bind:__l="__l"></u-tabbar></view>

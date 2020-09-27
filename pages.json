@@ -1,0 +1,91 @@
+{
+	"easycom": {
+		"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
+	},
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "首页",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/mine/index",
+			"style": {
+				"navigationBarTitleText": "我的",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/page/index",
+			"style": {
+				"navigationBarTitleText": "外链",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/guard/index",
+			"style": {
+				"navigationBarTitleText": "远程开门",
+				// "navigationBarBackgroundColor": "#f37b1d",
+				// "navigationBarTextStyle": "white",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/login/index",
+			"style": {
+				"navigationBarTitleText": "登录",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/login/code",
+			"style": {
+				"navigationBarTitleText": "登录验证码",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/user/add",
+			"style": {
+				"navigationBarTitleText": "居民录入",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/system/building",
+			"style": {
+				"navigationBarTitleText": "敬请期待",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/system/error",
+			"style": {
+				"navigationBarTitleText": "出错啦",
+				"navigationStyle": "custom"
+			}
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "seek",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	},
+	"tabBar": {
+		"color": "#909399",
+		"selectedColor": "#303133",
+		"backgroundColor": "#FFFFFF",
+		"borderStyle": "black",
+		"list": [{
+			"pagePath": "pages/index/index"
+		}, {
+			"pagePath": "pages/guard/index"
+		}, {
+			"pagePath": "pages/mine/index"
+		}]
+	}
+}

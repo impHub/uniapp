@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "首页",
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "banner": "/pages/index/banner",
+    "grid": "/pages/index/grid",
+    "seek-tabbar": "/components/tabbar"
+  }
+}
