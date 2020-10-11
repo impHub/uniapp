@@ -163,9 +163,9 @@ export default {
       console.log(item.id, item.url);
 	  this.$u.route(item.url);
 	// if(item.url){
-	// 	    uni.navigateTo({
-    //     url: item.url,
-    //   });
+		  //   uni.navigateTo({
+      //   url: item.url,
+      // });
 	// }else{
 	// 	this.$u.route(item.url)
 	// }
