@@ -94,29 +94,38 @@
             "style" : {}
         }
         ,{
-            "path" : "pages/grid/grid",
+			"path" : "pages/grid/grid",
+            "style" : {
+				"navigationBarTitleText": "身份信息"
+			}
+        }
+        ,{
+			"path" : "pages/expenses/expenses",
+            "style" : {
+				"navigationBarTitleText": "身份信息"
+			}
+        }
+        ,{
+			"path" : "pages/livelihood/livelihood",
+			"navigationBarTitleText": "身份信息",
             "style" : {}
         }
         ,{
-            "path" : "pages/expenses/expenses",
-            "style" : {}
+			"path" : "pages/myVehicle/myVehicle",
+            "style" : {
+				"navigationBarTitleText": "我的车辆"
+			}
         }
         ,{
-            "path" : "pages/livelihood/livelihood",
-            "style" : {}
-        }
-        ,{
-            "path" : "pages/myVehicle/myVehicle",
-            "style" : {}
-        }
-        ,{
-            "path" : "pages/myTicket/myTicket",
-            "style" : {}
+			"path" : "pages/myTicket/myTicket",
+            "style" : {
+				"navigationBarTitleText": "我的工单"
+			}
         }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "seek",
+		"navigationBarTitleText": "智慧社区",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
 	},
