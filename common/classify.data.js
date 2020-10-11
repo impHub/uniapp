@@ -1,107 +1,22 @@
 export default[
    {
-      "name": "女装",
-      "foods": [
-          {
-            "name": "A字裙",
-            "key": "A字裙",
-            "icon": "https://cdn.uviewui.com/uview/common/classify/1/1.jpg",
-            "cat": 10
-          },
-          {
-            "name": "T恤",
-            "key": "T恤",
-            "icon": "https://cdn.uviewui.com/uview/common/classify/1/2.jpg",
-            "cat": 10
-          },
-          {
-            "name": "半身裙",
-            "key": "半身裙",
-            "icon": "https://cdn.uviewui.com/uview/common/classify/1/3.jpg",
-            "cat": 10
-          },
-          {
-            "name": "衬衫",
-            "key": "衬衫",
-            "icon": "https://cdn.uviewui.com/uview/common/classify/1/4.jpg",
-            "cat": 10
-          },
-          {
-            "name": "短裙",
-            "key": "短裙",
-            "icon": "https://cdn.uviewui.com/uview/common/classify/1/5.jpg",
-            "cat": 10
-          },
-          {
-            "name": "阔腿裤",
-            "key": "阔腿裤",
-            "icon": "https://cdn.uviewui.com/uview/common/classify/1/6.jpg",
-            "cat": 10
-          },
-          {
-            "name": "连衣裙",
-            "key": "连衣裙",
-            "icon": "https://cdn.uviewui.com/uview/common/classify/1/7.jpg",
-            "cat": 10
-          },
-          {
-            "name": "妈妈装",
-            "key": "妈妈装",
-            "icon": "https://cdn.uviewui.com/uview/common/classify/1/8.jpg",
-            "cat": 10
-          },
-          {
-            "name": "牛仔裤",
-            "key": "牛仔裤",
-            "icon": "https://cdn.uviewui.com/uview/common/classify/1/9.jpg",
-            "cat": 10
-          },
-          {
-            "name": "情侣装",
-            "key": "情侣装",
-            "icon": "https://cdn.uviewui.com/uview/common/classify/1/10.jpg",
-            "cat": 10
-          },
-          {
-            "name": "休闲裤",
-            "key": "休闲裤",
-            "icon": "https://cdn.uviewui.com/uview/common/classify/1/11.jpg",
-            "cat": 10
-          },
-          {
-            "name": "雪纺衫",
-            "key": "雪纺衫",
-            "icon": "https://cdn.uviewui.com/uview/common/classify/1/12.jpg",
-            "cat": 10
-          },
-          {
-            "name": "防晒衣",
-            "key": "防晒衣",
-            "icon": "https://cdn.uviewui.com/uview/common/classify/1/13.jpg",
-            "cat": 10
-          },
-          {
-            "name": "礼服/婚纱",
-            "key": "礼服婚纱",
-            "icon": "https://cdn.uviewui.com/uview/common/classify/1/14.jpg",
-            "cat": 10
-          }
-      ]
-   },
-   {
     "name": "美食",
     "foods": [
         {
           "name": "火锅",
           "key": "火锅",
           "icon": "https://cdn.uviewui.com/uview/common/classify/2/1.jpg",
-          "cat": 6
+          "cat": 6,
+		  "content":"拼多多的处境正越发艰难。",
+		  "contentDetial":"一方面，业务驱动力不足，增速放缓，已经在8月发布的财报中显露无疑，市场正担忧拼多多的可持续发展能力；"
         },
         {
           "name": "糕点饼干",
           "key": "糕点饼干",
           "icon": "https://cdn.uviewui.com/uview/common/classify/2/2.jpg",
-          "cat": 6
+          "cat": 6,
+		  "content":"拼多多的处境正越发艰难。",
+		  "contentDetial":"一方面，业务驱动力不足，增速放缓，已经在8月发布的财报中显露无疑，市场正担忧拼多多的可持续发展能力；"
         },
         {
           "name": "坚果果干",
@@ -357,148 +272,6 @@ export default[
         ]
     },
     {
-        "name": "男装",
-        "foods": [
-            {
-                "name": "爸爸装",
-                "key": "爸爸装",
-                "icon": "https://cdn.uviewui.com/uview/common/classify/5/1.jpg",
-                "cat": 12
-            },
-            {
-                "name": "牛仔裤",
-                "key": "牛仔裤",
-                "icon": "https://cdn.uviewui.com/uview/common/classify/5/2.jpg",
-                "cat": 12
-            },
-            {
-                "name": "衬衫",
-                "key": "衬衫",
-                "icon": "https://cdn.uviewui.com/uview/common/classify/5/3.jpg",
-                "cat": 12
-            },
-            {
-                "name": "休闲裤",
-                "key": "休闲裤",
-                "icon": "https://cdn.uviewui.com/uview/common/classify/5/4.jpg",
-                "cat": 12
-            },
-            {
-                "name": "外套",
-                "key": "外套",
-                "icon": "https://cdn.uviewui.com/uview/common/classify/5/5.jpg",
-                "cat": 12
-            },
-            {
-                "name": "T恤",
-                "key": "T恤",
-                "icon": "https://cdn.uviewui.com/uview/common/classify/5/6.jpg",
-                "cat": 12
-            },
-            {
-                "name": "套装",
-                "key": "套装",
-                "icon": "https://cdn.uviewui.com/uview/common/classify/5/7.jpg",
-                "cat": 12
-            },
-            {
-                "name": "运动裤",
-                "key": "运动裤",
-                "icon": "https://cdn.uviewui.com/uview/common/classify/5/8.jpg",
-                "cat": 12
-            },
-            {
-                "name": "马甲/背心",
-                "key": "马甲背心",
-                "icon": "https://cdn.uviewui.com/uview/common/classify/5/9.jpg",
-                "cat": 12
-            },
-            {
-                "name": "POLO衫",
-                "key": "POLO衫",
-                "icon": "https://cdn.uviewui.com/uview/common/classify/5/10.jpg",
-                "cat": 12
-            },
-            {
-                "name": "商务装",
-                "key": "商务装",
-                "icon": "https://cdn.uviewui.com/uview/common/classify/5/11.jpg",
-                "cat": 12
-            }
-        ]
-    },
-    {
-        "name": "鞋品",
-        "foods": [
-            {
-                "name": "单鞋",
-                "key": "单鞋",
-                "icon": "https://cdn.uviewui.com/uview/common/classify/6/1.jpg",
-                "cat": 5
-            },
-            {
-                "name": "皮鞋",
-                "key": "皮鞋",
-                "icon": "https://cdn.uviewui.com/uview/common/classify/6/2.jpg",
-                "cat": 5
-            },
-            {
-                "name": "帆布鞋",
-                "key": "帆布鞋",
-                "icon": "https://cdn.uviewui.com/uview/common/classify/6/3.jpg",
-                "cat": 5
-            },
-            {
-                "name": "北京老布鞋",
-                "key": "北京老布鞋",
-                "icon": "https://cdn.uviewui.com/uview/common/classify/6/4.jpg",
-                "cat": 5
-            },
-            {
-                "name": "运动鞋",
-                "key": "运动鞋",
-                "icon": "https://cdn.uviewui.com/uview/common/classify/6/5.jpg",
-                "cat": 5
-            },
-            {
-                "name": "拖鞋",
-                "key": "拖鞋",
-                "icon": "https://cdn.uviewui.com/uview/common/classify/6/6.jpg",
-                "cat": 5
-            },
-            {
-                "name": "凉鞋",
-                "key": "凉鞋",
-                "icon": "https://cdn.uviewui.com/uview/common/classify/6/7.jpg",
-                "cat": 5
-            },
-            {
-                "name": "休闲鞋",
-                "key": "休闲鞋",
-                "icon": "https://cdn.uviewui.com/uview/common/classify/6/8.jpg",
-                "cat": 5
-            },
-            {
-                "name": "高跟鞋",
-                "key": "高跟鞋",
-                "icon": "https://cdn.uviewui.com/uview/common/classify/6/9.jpg",
-                "cat": 5
-            },
-            {
-                "name": "老人鞋",
-                "key": "老人鞋",
-                "icon": "https://cdn.uviewui.com/uview/common/classify/6/10.jpg",
-                "cat": 5
-            },
-            {
-                "name": "懒人鞋",
-                "key": "懒人鞋",
-                "icon": "https://cdn.uviewui.com/uview/common/classify/6/11.jpg",
-                "cat": 5
-            }
-        ]
-    },
-    {
         "name": "数码家电",
         "foods": [
             {
@@ -744,77 +517,6 @@ export default[
                 "key": "胸包",
                 "icon": "https://cdn.uviewui.com/uview/common/classify/9/11.jpg",
                 "cat": 0
-            }
-        ]
-    },
-    {
-        "name": "内衣",
-        "foods": [
-            {
-                "name": "袜子",
-                "key": "袜子",
-                "icon": "https://cdn.uviewui.com/uview/common/classify/10/1.jpg",
-                "cat": 11
-            },
-            {
-                "name": "吊带背心",
-                "key": "吊带背心",
-                "icon": "https://cdn.uviewui.com/uview/common/classify/10/2.jpg",
-                "cat": 11
-            },
-            {
-                "name": "抹胸",
-                "key": "抹胸",
-                "icon": "https://cdn.uviewui.com/uview/common/classify/10/3.jpg",
-                "cat": 11
-            },
-            {
-                "name": "内裤",
-                "key": "内裤",
-                "icon": "https://cdn.uviewui.com/uview/common/classify/10/4.jpg",
-                "cat": 11
-            },
-            {
-                "name": "文胸",
-                "key": "文胸",
-                "icon": "https://cdn.uviewui.com/uview/common/classify/10/5.jpg",
-                "cat": 11
-            },
-            {
-                "name": "文胸套装",
-                "key": "文胸套装",
-                "icon": "https://cdn.uviewui.com/uview/common/classify/10/6.jpg",
-                "cat": 11
-            },
-            {
-                "name": "打底塑身",
-                "key": "打底塑身",
-                "icon": "https://cdn.uviewui.com/uview/common/classify/10/7.jpg",
-                "cat": 11
-            },
-            {
-                "name": "家居服",
-                "key": "家居服",
-                "icon": "https://cdn.uviewui.com/uview/common/classify/10/8.jpg",
-                "cat": 11
-            },
-            {
-                "name": "船袜",
-                "key": "船袜",
-                "icon": "https://cdn.uviewui.com/uview/common/classify/10/9.jpg",
-                "cat": 11
-            },
-            {
-                "name": "情侣睡衣",
-                "key": "情侣睡衣",
-                "icon": "https://cdn.uviewui.com/uview/common/classify/10/10.jpg",
-                "cat": 11
-            },
-            {
-                "name": "丝袜",
-                "key": "丝袜",
-                "icon": "https://cdn.uviewui.com/uview/common/classify/10/11.jpg",
-                "cat": 11
             }
         ]
     },
