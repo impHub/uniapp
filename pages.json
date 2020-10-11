@@ -68,7 +68,52 @@
 				"navigationStyle": "custom"
 			}
 		}
-	],
+	    ,{
+            "path" : "pages/repair/repair",
+            "style" : {
+				"navigationBarTitleText": "故障报修",
+				"navigationStyle": "custom"
+			}
+        }
+        ,{
+            "path" : "pages/identity/identity",
+            "style" : {
+				"navigationBarTitleText": "身份信息",
+				"navigationStyle": "custom"
+			}
+        }
+        ,{
+            "path" : "pages/houses/houses",
+            "style" : {
+				"navigationBarTitleText": "房屋信息",
+				"navigationStyle": "custom"
+			}
+        }
+        ,{
+            "path" : "pages/defray/defray",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/grid/grid",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/expenses/expenses",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/livelihood/livelihood",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/myVehicle/myVehicle",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/myTicket/myTicket",
+            "style" : {}
+        }
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "seek",

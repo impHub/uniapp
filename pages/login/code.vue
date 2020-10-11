@@ -30,9 +30,11 @@ export default {
 		displayMobile: vm => vm.mobile.replace(/(\d{3})\d{4}(\d{4})/, "$1****$2")
 	},
 	onLoad(option) {
+		// 接收手机号
 		if(option.mobile){
 			this.mobile = option.mobile
 			this.$nextTick(_=>{
+				// 请求验证码
 				this.sendCaptcha()
 			})
 		}else{
@@ -47,6 +49,7 @@ export default {
 		async sendCaptcha() {
 			// 判断是否正在计时
 			if(this.$refs.uCode.canGetCode && this.$u.test.mobile(this.mobile)) {
+				console.log('开始验证')
 				// 如果请求返回错误会拦截堵塞，所以不用判断可以直接在后面写语法成功后的逻辑
 				await this.$u.api.sendCaptcha({mobile: this.mobile})
 				// this.mobile = ''

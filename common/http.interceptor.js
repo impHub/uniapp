@@ -1,4 +1,6 @@
 import {APIMAP} from './http.api.js'
+import store from '@/store'
+// import iVue from 'vue'
 // 这里的vm，就是我们在vue文件里面的this，所以我们能在这里获取vuex的变量，比如存放在里面的token
 // 同时，我们也可以在此使用getApp().globalData，如果你把token放在getApp().globalData的话，也是可以使用的
 const loginPath = '/pages/login/index'
@@ -25,6 +27,8 @@ const install = (Vue, vm) => {
 	});
 	// 请求拦截，配置Token等参数
 	Vue.prototype.$u.http.interceptor.request = (config) => {
+		console.log('Vue.prototype.$u.http.interceptor.request');
+		// store.commit('carriedLogout', 996)
 		let apiinfo = Object.values(APIMAP).filter(api => api[1] === config.url)
 		if(apiinfo.length <= 0){
 			console.log('API不存在，取消请求')
@@ -35,7 +39,7 @@ const install = (Vue, vm) => {
 			if(vm.vuex_token || apiinfo[2] === false){
 				config.header.Authorization = vm.vuex_token;
 			}else{
-				vm.$u.route(loginPath)
+				// vm.$u.route(loginPath) //第三次触发route
 				config = false
 			}
 		}
@@ -43,14 +47,25 @@ const install = (Vue, vm) => {
 	}
 	// 响应拦截，判断状态码是否通过
 	Vue.prototype.$u.http.interceptor.response = res => {
-		
+		// 请求后台接口成功
 		if(res.statusCode == 200) {
+			// 并且后台返回登录成功码 code===0
 			if(res.data.code === 0){
+				// console.log(res)
+				// 抛出后台数据
 				return res.data.data;
 			}else{
+				// 账号密码错误时
 				vm.$u.toast(`${res.data.msg||''}`);
 				if([100002,100001].indexOf(res.data.code) >= 0){
+					// token过期触发 
 					setTimeout(_ => vm.$u.route(loginPath), 1500)
+					// 并且退出登录
+					// store.commit('carriedLogout', 996)
+					// Vue.$u.auth(Vue.$route.fullPath);
+					// console.log(iVue)
+					// const iVue = new Vue();
+					// iVue.$u.auth();
 				}
 				return false
 			}

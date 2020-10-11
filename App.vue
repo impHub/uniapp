@@ -46,7 +46,7 @@
 	
 		},
 		onShow: function() {
-			console.log('token',this.$store.state.vuex_token)
+			// console.log('token',this.$store.state.vuex_token)
 			console.log('App Show')
 		},
 		onHide: function() {

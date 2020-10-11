@@ -64,12 +64,15 @@
 				this.list = await this.$u.api.getMenu()
 			},
 			handlerClick(item){
+				console.log('开始触发1')
 				if(item.disabled){
+					console.log('触发item.disabled2')
 					this.$u.toast('功能建设中')
 					return;
 				}
+				console.log('触发route3')
 				// this.$u.route({url: '/pages/login/index'})
-				this.$u.route(item.url)
+				// this.$u.route(item.url)
 			}
 		}
 	}

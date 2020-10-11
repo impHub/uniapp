@@ -24,6 +24,7 @@ const saveLifeData = function(key, value){
 		tmp = tmp ? tmp : {};
 		tmp[key] = value;
 		// 执行这一步后，所有需要存储的变量，都挂载在本地的lifeData对象中
+		// 存储到缓存
 		uni.setStorageSync('lifeData', tmp);
 	}
 }
@@ -39,6 +40,8 @@ const store = new Vuex.Store({
 		},
 		// 如果vuex_version无需保存到本地永久存储，无需lifeData.vuex_version方式
 		vuex_version: '1.0.1',
+		//保存登录之前的完整路径
+		vuex_fullPath:'',
 		// 自定义tabbar数据
 		vuex_tabbar: [{
 				iconPath: "home",
@@ -62,6 +65,10 @@ const store = new Vuex.Store({
 		]
 	},
 	mutations: {
+		// 退出登录
+		carriedLogout(state, payload){
+			console.log(state, payload)
+		},
 		$uStore(state, payload) {
 			// 判断是否多层级调用，state中为对象存在的情况，诸如user.info.score = 1
 			let nameArr = payload.name.split('.');
@@ -81,7 +88,13 @@ const store = new Vuex.Store({
 			}
 			// 保存变量到本地，见顶部函数定义
 			saveLifeData(saveKey, state[saveKey])
-		}
+		},
+		$Test(state, val){
+			console.log(state, val)
+		},
+		// $fullPath(state,newVal){
+		// 	state.vuex_fullPath = newVal
+		// }
 	}
 })
 

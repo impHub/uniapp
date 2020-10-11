@@ -1,17 +1,7 @@
 <template>
 	<view class="container">
-		<u-steps :list="steps" :current="step" active-color="#1cbbb4" mode="number" class="steps"></u-steps>
-		
+		<!-- <u-steps :list="steps" :current="step" active-color="#1cbbb4" mode="number" class="steps"></u-steps> -->
 		<view v-show="step===0">
-			<u-cell-group title="基本信息 - 填写">
-				<u-cell-item title="手机号码" :arrow="false">
-					<view slot="right-icon">
-						<u-input v-model="form.mobile" type="number" :maxlength="11" placeholder="请输入手机号码"/>
-					</view>
-				</u-cell-item>
-			</u-cell-group>
-		</view>
-		<view v-show="step===1">
 			<view class="form-item-group">
 				<u-form-item label="图片上传" label-position="top">
 					<u-upload ref="uploadAvatar" :action="updateActionImg" :before-upload="beforeUpload" :size-type="updateSizeType" :header="updateHeader" :form-data="{group: 'resident',type: 'avatar'}" @on-success="avatarSuccess" @on-remove="uploadRemove(1)" :show-progress="false" upload-text="本人正面照" :multiple="false" :max-count="1" width="210"></u-upload>
@@ -30,43 +20,7 @@
 				<u-cell-item title="签发机关" :value="form.cardOrg || '-'" :arrow="false"></u-cell-item>
 			</u-cell-group>
 		</view>
-		<view v-show="step===2">
-			<u-grid :col="3" class="houselist">
-				<u-grid-item class="item" v-for="(item, index) in houseSelected" :key="item.id">
-					<u-icon class="close" name="close" @click="removeHouse(index)"></u-icon>
-					<view class="label">{{item.name}}</view>
-					<view class="text">{{item.buildName + item.unitName}}</view>
-					<view class="tags">
-						<u-tag class="tag" :text="getLabel(propertyList, item.property)" type="success" mode="plain" size="mini" />
-						<u-tag class="tag" :text="getLabel(relationList, item.relation)" type="primary" mode="plain" size="mini" />
-					</view>
-				</u-grid-item>
-				<u-grid-item class="item" @click="houseShow = true">
-					<u-icon class="icon" name="plus-circle"></u-icon>
-					<view class="text">添加</view>
-				</u-grid-item>
-			</u-grid>
-		</view>
-		<view v-show="step===3">
-			<view class="title">快捷选择</view>
-			<u-grid :col="3" class="quickSelect">
-				<u-grid-item>
-					<u-checkbox class="checkbox" v-model="quickSelect.front">全部出入口</u-checkbox>
-				</u-grid-item>
-				<u-grid-item>
-					<u-checkbox class="checkbox" v-model="quickSelect.unit">全部单元门</u-checkbox>
-				</u-grid-item>
-				<u-grid-item>
-					<u-checkbox class="checkbox" v-model="quickSelect.own">所属单元门</u-checkbox>
-				</u-grid-item>
-			</u-grid>
-			<view class="title">门禁列表</view>
-			<u-grid :col="2" class="guardlist">
-				<u-grid-item class="item" v-for="item in guardList" :key="item.id" @click="item.checked=!item.checked">
-					<u-checkbox class="checkbox" v-model="item.checked">{{item.name}}</u-checkbox>
-				</u-grid-item>
-			</u-grid>
-		</view>
+
 		<view class="actionbox">
 			<u-button type="warning" v-if="step>0" class="prev" @click="prev">上一步</u-button> 
 			<u-button type="success" :disabled="disabledNext" v-if="step<steps.length-1" class="next" @click="next">下一步</u-button> 
@@ -82,6 +36,7 @@
 	export default {
 		onShow(){
 			// 鉴权1 触发vuex
+			console.log(this.$route.fullPath,'hahhahah');
 			this.$u.auth(this.$route.fullPath)
 		},
 		data(){
@@ -160,15 +115,15 @@
 				return !this.checkStep(this.step)
 			}
 		},
-	  async	mounted() {
+		mounted() {
 			//鉴权2 数据请求触发api拦截器 
-		   await this.getData()
+			this.getData()
 		},
 		methods:{
-			 getData(){
-				this.houseList =  this.$u.api.getHouse()
-				const frontlist =  this.$u.api.getFront()
-				const unitlist =  this.$u.api.getUnit()
+			async getData(){
+				this.houseList = await this.$u.api.getHouse()
+				const frontlist = await this.$u.api.getFront()
+				const unitlist = await this.$u.api.getUnit()
 				this.guardList = frontlist.map(d => Object.assign(d, {checked: false, type: 'front'})).concat(unitlist.map(d => Object.assign(d, {checked: false, type: 'unit'})))
 			},
 			checkStep(step){

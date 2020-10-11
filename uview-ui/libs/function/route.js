@@ -4,6 +4,7 @@ import queryParams from '../../libs/function/queryParams.js';
  * 注意:本方法没有对跳转的回调函数进行封装
  */
 function route(options = {}, params = false) {
+	console.log(options, 9999)
 	let config = {
 		type: 'navigateTo',
 		url: '',
@@ -59,9 +60,9 @@ function route(options = {}, params = false) {
 			url: options
 		});
 	}
-	
 	// navigateTo类型的跳转
 	if (config.type == 'navigateTo' || config.type == 'to') {
+		console.log('navigateTo')
 		return uni.navigateTo({
 			url: config.url,
 			animationType: config.animationType,
@@ -69,21 +70,25 @@ function route(options = {}, params = false) {
 		});
 	}
 	if (config.type == 'redirectTo' || config.type == 'redirect') {
+		console.log('navigateTo2')
 		return uni.redirectTo({
 			url: config.url,
 		});
 	}
 	if (config.type == 'switchTab' || config.type == 'tab') {
+		console.log('navigateTo3')
 		return uni.switchTab({
 			url: config.url,
 		});
 	}
 	if (config.type == 'reLaunch') {
+		console.log('navigateTo4')
 		return uni.reLaunch({
 			url: config.url
 		});
 	}
 	if (config.type == 'navigateBack' || config.type == 'back') {
+		console.log('navigateTo5')
 		return uni.navigateBack({
 			delta: parseInt(config.delta ? config.delta : this.delta)
 		});
