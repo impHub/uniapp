@@ -9,6 +9,8 @@ App.mpType = 'app'
 import uView from 'uview-ui'
 Vue.use(uView);
 
+// import colorBtn from './colorui/components/pages/basics/button.vue'
+
 import store from '@/store'
 
 // 引入uView提供的对vuex的简写法文件

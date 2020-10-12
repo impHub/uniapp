@@ -37,9 +37,10 @@ const install = (Vue, vm) => {
 			apiinfo = apiinfo[0]
 			// 不存在token或者请求配置不需要token时继续执行，否则跳转到登录页
 			if(vm.vuex_token || apiinfo[2] === false){
+				// 请求时带入token   config.header.token
 				config.header.Authorization = vm.vuex_token;
 			}else{
-				// vm.$u.route(loginPath) //第三次触发route
+				vm.$u.route(loginPath) //第三次触发route
 				config = false
 			}
 		}
@@ -61,7 +62,7 @@ const install = (Vue, vm) => {
 					// token过期触发 
 					setTimeout(_ => vm.$u.route(loginPath), 1500)
 					// 并且退出登录
-					// store.commit('carriedLogout', 996)
+					store.commit('carriedLogout', 996)
 					// Vue.$u.auth(Vue.$route.fullPath);
 					// console.log(iVue)
 					// const iVue = new Vue();

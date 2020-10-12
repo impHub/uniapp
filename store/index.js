@@ -65,9 +65,44 @@ const store = new Vuex.Store({
 		]
 	},
 	mutations: {
+		// 从缓存获取小区
+		communityStorage(state){
+			uni.getStorage({
+				key: "community",
+				success: function (res) {
+				  console.log(res.data, "缓存数据");
+				  state.vuex_community.name = res.data.label
+				  state.vuex_community.id = res.data.value
+				},
+			  });
+
+		},
+		// 保存小区
+		community(state, payload){
+			// console.log(payload);
+			// 存入vuex及缓存
+			state.vuex_community.name = payload.label
+			state.vuex_community.id = payload.value
+			uni.setStorage({
+				key: 'community',
+				data: payload,
+				success: function () {
+					console.log('success');
+				}
+			});
+		},
 		// 退出登录
 		carriedLogout(state, payload){
 			console.log(state, payload)
+			state.vuex_token = '';
+			state.vuex_user = {};
+			// 清除缓存
+			uni.removeStorage({
+				key: 'lifeData',
+				success: function (res) {
+					console.log('success');
+				}
+			});
 		},
 		$uStore(state, payload) {
 			// 判断是否多层级调用，state中为对象存在的情况，诸如user.info.score = 1

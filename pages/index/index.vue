@@ -1,8 +1,8 @@
 <template>
 	<view class="content">
 		<view class="main">
-			<!-- <seek-community-select/>
-			<seek-notice/> -->
+			 <seek-community-select/>
+			<!-- <seek-notice/>  -->
 			<banner/>
 			<grid/>
 		</view>
@@ -12,6 +12,7 @@
 
 <script>
 	// import notice from '@/components/notice.vue'
+	import seekCommunitySelect from '@/components/community-select.vue'
 	import seekTabbar from '@/components/tabbar.vue'
 	import banner from './banner.vue'
 	import grid from './grid.vue'
@@ -19,7 +20,8 @@
 		components:{
 			banner,
 			grid,
-			seekTabbar
+			seekTabbar,
+			seekCommunitySelect
 		},
 		data() {
 			return {
