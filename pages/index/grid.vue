@@ -89,11 +89,12 @@ export default {
         },
         {
           id: 5,
-          label: "民生服务",
+          label: "民生服务test",
           icon: "handheart",
           dec: "",
           bgcolor: "bg-pink",
-          disabled: true,
+          disabled: false,
+          url: '/pages/testdemo/testdemo'
         },
         {
           id: 6,
