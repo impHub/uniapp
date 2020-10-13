@@ -1,234 +1,217 @@
 <template>
-  <view class="u-wrap">
-    <view class="u-search-box">
-      <view class="u-search-inner">
-        <u-icon name="search" color="#909399" :size="28"></u-icon>
-        <text class="u-search-text">搜索uView</text>
-      </view>
-    </view>
-    <view class="u-menu-wrap">
-      <scroll-view
-        scroll-y
-        scroll-with-animation
-        class="u-tab-view menu-scroll-view"
-        :scroll-top="scrollTop"
-      >
-        <view
-          v-for="(item, index) in tabbar"
-          :key="index"
-          class="u-tab-item"
-          :class="[current == index ? 'u-tab-item-active' : '']"
-          :data-current="index"
-          @tap.stop="swichMenu(index)"
-        >
-          <text class="u-line-1">{{ item.name }}</text>
-        </view>
-      </scroll-view>
-      <block v-for="(item, index) in tabbar" :key="index">
-        <scroll-view scroll-y class="right-box" v-if="current == index">
-          <view class="page-view">
-            <view class="class-item">
-              <view class="item-title">
-                <text>{{ item.name }}</text>
-              </view>
-              <view class="item-container">
-                <view
-                  class="thumb-box"
-                  v-for="(item1, index1) in item.foods"
-                  :key="index1"
-                >
-				  <view class="title">
-				  	{{item1.content}}
-				  </view>
-				  <view class="content">
-				  	{{item1.contentDetial}}
-				  </view>
-                </view>
-              </view>
-            </view>
-          </view>
-        </scroll-view>
-      </block>
-    </view>
-  </view>
+	<view>
+		<view class="fixed">
+			<cu-custom :isBack="true" bgColor="bg-shadeTop text-white">
+				<block slot="backText">返回</block>
+				<block slot="content">垂直导航</block>
+			</cu-custom>
+		</view>
+		<!-- <swiper class="screen-swiper round-dot" :indicator-dots="true" :circular="true" :autoplay="true" interval="5000"
+		 duration="500">
+			<swiper-item v-for="(item,index) in 4" :key="index">
+				<image :src="'https://ossweb-img.qq.com/images/lol/web201310/skin/big3900'+index+ '.jpg'" mode="aspectFill"></image>
+			</swiper-item>
+		</swiper> -->
+		<view class="VerticalBox">
+			<scroll-view class="VerticalNav nav" scroll-y scroll-with-animation :scroll-top="verticalNavTop" style="height:calc(100vh)">
+				<view class="cu-item" :class="index==tabCur?'text-green cur':''" v-for="(item,index) in list" :key="index" @tap="TabSelect"
+				 :data-id="index">
+					Tab-{{item.name}}
+				</view>
+			</scroll-view>
+			<scroll-view class="VerticalMain" scroll-y scroll-with-animation style="height:calc(100vh)"
+			 :scroll-into-view="'main-'+mainCur" @scroll="VerticalMain">
+				<view class="padding-top padding-lr" v-for="(item,index) in list" :key="index" :id="'main-'+index">
+					<view class="cu-bar solid-bottom bg-white">
+						<view class="action">
+							<text class="cuIcon-title text-green"></text> Tab-{{item.name}}</view>
+					</view>
+					<view class="cu-list menu-avatar">
+						<view class="cu-item">
+							<view class="cu-avatar round lg" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10001.jpg);"></view>
+							<view class="content">
+								<view class="text-grey">凯尔</view>
+								<view class="text-gray text-sm flex">
+									<text class="text-cut">
+										我已天理为凭，踏入这片荒芜，不再受凡人的枷锁遏制。我已天理为凭，踏入这片荒芜，不再受凡人的枷锁遏制。
+									</text> </view>
+							</view>
+							<view class="action">
+								<view class="text-grey text-xs">22:20</view>
+							</view>
+						</view>
+						<view class="cu-item">
+							<view class="cu-avatar round lg" style="background-image:url(https://ossweb-img.qq.com/images/lol/img/champion/Taric.png);">
+							</view>
+							<view class="content">
+								<view class="text-grey">
+									<text class="text-cut">瓦洛兰之盾-塔里克</text>
+								</view>
+								<view class="text-gray text-sm flex">
+									<text class="text-cut">
+										塔里克是保护者星灵，用超乎寻常的力量守护着符文之地的生命、仁爱以及万物之美。塔里克由于渎职而被放逐，离开了祖国德玛西亚，前去攀登巨神峰寻找救赎，但他找到的却是来自星界的更高层的召唤。现在的塔里克与古代巨神族的神力相融合，以瓦洛兰之盾的身份，永不疲倦地警惕着阴险狡诈的虚空腐化之力。
+									</text>
+								</view>
+							</view>
+							<view class="action">
+								<view class="text-grey text-xs">22:20</view>
+							</view>
+						</view>
+						<view class="cu-item ">
+							<view class="cu-avatar radius lg" style="background-image:url(https://ossweb-img.qq.com/images/lol/img/champion/Morgana.png);"></view>
+							<view class="content">
+								<view class="text-pink"><text class="text-cut">莫甘娜</text></view>
+								<view class="text-gray text-sm flex"> <text class="text-cut">凯尔，你被自己的光芒变的盲目！</text></view>
+							</view>
+							<view class="action">
+								<view class="text-grey text-xs">22:20</view>
+							</view>
+						</view>
+						<view class="cu-item grayscale">
+							<view class="cu-avatar radius lg" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big81007.jpg);"></view>
+							<view class="content">
+								<view><text class="text-cut">伊泽瑞尔</text>
+								</view>
+								<view class="text-gray text-sm flex"> <text class="text-cut"> 等我回来一个打十个</text></view>
+							</view>
+							<view class="action">
+								<view class="text-grey text-xs">22:20</view>
+							</view>
+						</view>
+						<view class="cu-item cur">
+							<view class="cu-avatar radius lg" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big81020.jpg);">
+								<view class="cu-tag badge"></view>
+							</view>
+							<view class="content">
+								<view>
+									<text class="text-cut">瓦罗兰大陆-睡衣守护者-新手保护营</text>
+								</view>
+								<view class="text-gray text-sm flex">
+									<text class="text-cut"> 伊泽瑞尔： 传送中...</text></view>
+							</view>
+							<view class="action">
+								<view class="text-grey text-xs">22:20</view>
+							</view>
+						</view>
+					</view>
+				</view>
+			</scroll-view>
+		</view>
+	</view>
 </template>
 
 <script>
-import classifyData from "@/common/classify.data.js";
-export default {
-  data() {
-    return {
-      tabbar: classifyData,
-      scrollTop: 0, //tab标题的滚动条位置
-      current: 0, // 预设当前项的值
-      menuHeight: 0, // 左边菜单的高度
-      menuItemHeight: 0, // 左边菜单item的高度
-    };
-  },
-  computed: {},
-  methods: {
-    getImg() {
-      return Math.floor(Math.random() * 35);
-    },
-    // 点击左边的栏目切换
-    async swichMenu(index) {
-      if (index == this.current) return;
-      this.current = index;
-      // 如果为0，意味着尚未初始化
-      if (this.menuHeight == 0 || this.menuItemHeight == 0) {
-        await this.getElRect("menu-scroll-view", "menuHeight");
-        await this.getElRect("u-tab-item", "menuItemHeight");
-      }
-      // 将菜单菜单活动item垂直居中
-      this.scrollTop =
-        index * this.menuItemHeight +
-        this.menuItemHeight / 2 -
-        this.menuHeight / 2;
-    },
-    // 获取一个目标元素的高度
-    getElRect(elClass, dataVal) {
-      new Promise((resolve, reject) => {
-        const query = uni.createSelectorQuery().in(this);
-        query
-          .select("." + elClass)
-          .fields({ size: true }, (res) => {
-            // 如果节点尚未生成，res值为null，循环调用执行
-            if (!res) {
-              setTimeout(() => {
-                this.getElRect(elClass);
-              }, 10);
-              return;
-            }
-            this[dataVal] = res.height;
-          })
-          .exec();
-      });
-    },
-  },
-};
+	export default {
+		data() {
+			return {
+				list: [],
+				tabCur: 0,
+				mainCur: 0,
+				verticalNavTop: 0,
+				load: true
+			};
+		},
+		onLoad() {
+			uni.showLoading({
+				title: '加载中...',
+				mask: true
+			});
+			let list = [{}];
+			for (let i = 0; i < 6; i++) {
+				list[i] = {};
+				list[i].name = String.fromCharCode(65 + i);
+				list[i].id = i;
+			}
+			this.list = list;
+			this.listCur = list[0];
+		},
+		onReady() {
+			uni.hideLoading()
+		},
+		methods: {
+			TabSelect(e) {
+				this.tabCur = e.currentTarget.dataset.id;
+				this.mainCur = e.currentTarget.dataset.id;
+				this.verticalNavTop = (e.currentTarget.dataset.id - 1) * 50
+			},
+			VerticalMain(e) {
+				// #ifdef MP-ALIPAY
+				   return false  //支付宝小程序暂时不支持双向联动 
+				// #endif
+				let that = this;
+				let tabHeight = 0;
+				if (this.load) {
+					for (let i = 0; i < this.list.length; i++) {
+						let view = uni.createSelectorQuery().select("#main-" + this.list[i].id);
+						view.fields({
+							size: true
+						}, data => {
+							this.list[i].top = tabHeight;
+							tabHeight = tabHeight + data.height;
+							this.list[i].bottom = tabHeight;
+						}).exec();
+					}
+					this.load = false
+				}
+				let scrollTop = e.detail.scrollTop + 10;
+				for (let i = 0; i < this.list.length; i++) {
+					if (scrollTop > this.list[i].top && scrollTop < this.list[i].bottom) {
+						this.verticalNavTop = (this.list[i].id - 1) * 50
+						this.tabCur = this.list[i].id
+						console.log(scrollTop)
+						return false
+					}
+				}
+			}
+		},
+	}
 </script>
 
-<style lang="scss" scoped>
-.u-wrap {
-  height: calc(100vh);
-  /* #ifdef H5 */
-  height: calc(100vh - var(--window-top));
-  /* #endif */
-  display: flex;
-  flex-direction: column;
-}
+<style>
+	.fixed {
+		position: fixed;
+		z-index: 99;
+	}
 
-.u-search-box {
-  padding: 18rpx 30rpx;
-}
+	.VerticalNav.nav {
+		width: 200upx;
+		white-space: initial;
+	}
 
-.u-menu-wrap {
-  flex: 1;
-  display: flex;
-  overflow: hidden;
-}
+	.VerticalNav.nav .cu-item {
+		width: 100%;
+		text-align: center;
+		background-color: #fff;
+		margin: 0;
+		border: none;
+		height: 50px;
+		position: relative;
+	}
 
-.u-search-inner {
-  background-color: rgb(234, 234, 234);
-  border-radius: 100rpx;
-  display: flex;
-  align-items: center;
-  padding: 10rpx 16rpx;
-}
+	.VerticalNav.nav .cu-item.cur {
+		background-color: #f1f1f1;
+	}
 
-.u-search-text {
-  font-size: 26rpx;
-  color: $u-tips-color;
-  margin-left: 10rpx;
-}
+	.VerticalNav.nav .cu-item.cur::after {
+		content: "";
+		width: 8upx;
+		height: 30upx;
+		border-radius: 10upx 0 0 10upx;
+		position: absolute;
+		background-color: currentColor;
+		top: 0;
+		right: 0upx;
+		bottom: 0;
+		margin: auto;
+	}
 
-.u-tab-view {
-  width: 200rpx;
-  height: 100%;
-}
+	.VerticalBox {
+		display: flex;
+		height: 100vh;
+	}
 
-.u-tab-item {
-  height: 110rpx;
-  background: #f6f6f6;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 26rpx;
-  color: #444;
-  font-weight: 400;
-  line-height: 1;
-}
-
-.u-tab-item-active {
-  position: relative;
-  color: #000;
-  font-size: 30rpx;
-  font-weight: 600;
-  background: #fff;
-}
-
-.u-tab-item-active::before {
-  content: "";
-  position: absolute;
-  border-left: 4px solid $u-type-primary;
-  height: 32rpx;
-  left: 0;
-  top: 39rpx;
-}
-
-.u-tab-view {
-  height: 100%;
-}
-
-.right-box {
-  background-color: rgb(250, 250, 250);
-}
-
-.page-view {
-  padding: 16rpx;
-}
-
-.class-item {
-  margin-bottom: 30rpx;
-  background-color: #fff;
-  padding: 16rpx;
-  border-radius: 8rpx;
-}
-
-.item-title {
-  font-size: 26rpx;
-  color: $u-main-color;
-  font-weight: bold;
-}
-
-.item-menu-name {
-  font-weight: normal;
-  font-size: 24rpx;
-  color: $u-main-color;
-}
-
-.item-container {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.thumb-box {
-  width: 100%;
-  // display: flex;
-  // align-items: center;
-  // justify-content: center;
-  // flex-direction: column;
-  margin-top: 20rpx;
-  .title{
-	  font-size: 30rpx;
-	  font-weight: bold;
-	  margin-bottom: 6rpx;
-  }
-}
-
-.item-menu-image {
-  width: 120rpx;
-  height: 120rpx;
-}
+	.VerticalMain {
+		background-color: #f1f1f1;
+		flex: 1;
+	}
 </style>
