@@ -41,6 +41,7 @@
 
 <script>
 import { mapState, mapMutations } from "vuex";
+import wx from "weixin-js-sdk";
 export default {
   data() {
     return {
@@ -83,8 +84,8 @@ export default {
           label: "民生服务",
           icon: "service",
           dec: "物业便民服务",
-		  bgcolor: "bg-mauve",
-		  url: '/pages/livelihood/livelihood',
+          bgcolor: "bg-mauve",
+          url: "/pages/livelihood/livelihood",
           disabled: true,
         },
         {
@@ -94,7 +95,7 @@ export default {
           dec: "",
           bgcolor: "bg-pink",
           disabled: false,
-          url: '/pages/testdemo/testdemo'
+          url: "/pages/testdemo/testdemo",
         },
         {
           id: 6,
@@ -140,6 +141,17 @@ export default {
     // }
   },
   mounted() {
+    // console.log(wx);
+    // wx.config({
+    //   debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印
+    //   appId: "", // 必填，公众号的唯一标识
+    //   timestamp: DateTime.Today.ToFileTime(), // 必填，生成签名的时间戳
+    //   nonceStr: "", // 必填，生成签名的随机串
+    //   signature: "", // 必填，签名
+    //   jsApiList: [], // 必填，需要使用的JS接口列表
+    //   openTagList: [], // 可选，需要使用的开放标签列表，例如['wx-open-launch-app']
+    // });
+    //
     this.getData();
   },
   methods: {
@@ -162,15 +174,30 @@ export default {
     },
     handlerClick(item) {
       console.log(item.id, item.url);
-	  this.$u.route(item.url);
-	// if(item.url){
-		  //   uni.navigateTo({
+
+      if (item.id === 2) {
+        console.log("缴费");
+        let userAgent = navigator.userAgent.toLowerCase();
+        if (userAgent.match(/Alipay/i) == "alipay") {
+          // 支付宝
+          this.$u.route("https://m.alipay.com/4rGLYmW");
+        } else if (userAgent.match(/MicroMessenger/i) == "micromessenger") {
+          // 微信(接入JSSDK)
+        } else {
+          // H5
+          this.$u.route(item.url);
+        }
+      } else {
+        this.$u.route(item.url);
+      }
+      // if(item.url){
+      //   uni.navigateTo({
       //   url: item.url,
       // });
-	// }else{
-	// 	this.$u.route(item.url)
-	// }
-  
+      // }else{
+      // 	this.$u.route(item.url)
+      // }
+
       // if(item.id === 1){
       // 	console.log(item.id)
       // 	// this.$u.route(item.url)

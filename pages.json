@@ -134,6 +134,10 @@
             "path" : "pages/default/default",
             "style" : {}
         }
+        ,{
+            "path" : "pages/registered/registered",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

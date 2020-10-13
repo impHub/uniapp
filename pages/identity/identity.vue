@@ -5,11 +5,35 @@
       <view class="form-item-group">
         <u-form-item label="图片上传" label-position="top">
           <view class="form_tag">
-			  <u-tag v-if="certification==='未认证'" type='info' mode="dark" text="未认证" shape="square" />
-			  <u-tag v-else-if="certification==='审核中'" type='warning' mode="dark" text="审核中" shape="square" />
-			  <u-tag v-else-if="certification==='已认证'" type='success' mode="dark" text="已认证" shape="square" />
-			  <u-tag v-else-if="certification==='认证失败'" type='error' mode="dark" text="认证失败请重新上传图片" shape="square" />
-		 </view>
+            <u-tag
+              v-if="certification === '未认证'"
+              type="info"
+              mode="dark"
+              text="未认证"
+              shape="square"
+            />
+            <u-tag
+              v-else-if="certification === '审核中'"
+              type="warning"
+              mode="dark"
+              text="审核中"
+              shape="square"
+            />
+            <u-tag
+              v-else-if="certification === '已认证'"
+              type="success"
+              mode="dark"
+              text="已认证"
+              shape="square"
+            />
+            <u-tag
+              v-else-if="certification === '认证失败'"
+              type="error"
+              mode="dark"
+              text="认证失败请重新上传图片"
+              shape="square"
+            />
+          </view>
           <u-upload
             ref="uploadAvatar"
             :action="updateActionImg"
@@ -102,21 +126,17 @@
     </view>
 
     <view class="actionbox">
-      <u-button type="warning" v-if="step > 0" class="prev" @click="prev"
-        >上一步</u-button
-      >
-      <u-button
+      <u-button type="warning" class="prev" @click="dropOut">返回</u-button>
+      <!-- <u-button
         type="success"
         :disabled="disabledNext"
-        v-if="step < steps.length - 1"
         class="next"
         @click="next"
         >下一步</u-button
-      >
+      > -->
       <u-button
-        type="primary"
+        type="success"
         :disabled="disabledNext"
-        v-if="step === steps.length - 1"
         class="submit"
         @click="submit"
         >提交</u-button
@@ -168,7 +188,7 @@ export default {
       deviceAddressIds: [],
     };
     return {
-	  certification: '未认证',
+      certification: "未认证",
       steps: [
         { name: "基本信息" },
         { name: "上传图片" },
@@ -234,6 +254,11 @@ export default {
     this.getData();
   },
   methods: {
+    dropOut() {
+      uni.switchTab({
+        url: "/pages/mine/index",
+      });
+    },
     async getData() {
       this.houseList = await this.$u.api.getHouse();
       const frontlist = await this.$u.api.getFront();
