@@ -2,10 +2,11 @@
   <view class="container">
     <!-- <button @click="moke">moke</button> -->
     <!-- <u-steps :list="steps" :current="step" active-color="#1cbbb4" mode="number" class="steps"></u-steps> -->
-    <view v-show="step === 0">
+    <view class="container_grid">
       <u-grid :col="3" class="houselist">
+        <!-- 用户房屋数据 -->
         <u-grid-item
-          class="item"
+          class="item houseSelected_list"
           v-for="(item, index) in houseSelected"
           :key="item.id"
         >
@@ -53,6 +54,7 @@
       mode="mutil-column"
       @confirm="selectRelation"
     ></u-select>
+    <!-- 房屋树控件 -->
     <u-select
       v-model="houseShow"
       :list="houseList"
@@ -112,7 +114,9 @@ export default {
         unit: false,
         own: true,
       },
+      // 固定数据
       relationList: [
+        { label: "本人", value: 0 },
         { label: "子女", value: 1 },
         { label: "父母", value: 2 },
         { label: "亲属", value: 3 },
@@ -128,12 +132,13 @@ export default {
       houseList: [],
       form: Object.assign({}, params),
       defForm: Object.assign({}, params),
-      houseSelected: [], // {id: '101012501', name: '2501', buildId: 1, buildName: '第1栋', unitId: 1, unitName: '第1单元', property: 1, relation: 1}
+      houseSelected: [], // 用户房屋数据
       houseTemp: {}, //添加房屋时有两个弹出选择，先选择房屋后选择房屋关系，此处临时存储选择的房屋数据
     };
   },
   watch: {
     houseSelected: {
+      // 每次用户房屋信息改变执行这个函数
       handler: "changeHouse",
     },
     quickSelect: {
@@ -157,12 +162,13 @@ export default {
     this.getData();
   },
   methods: {
-    moke() {},
     async getData() {
+      // 房屋信息
       this.houseList = await this.$u.api.getHouse();
+      console.log(this.houseList, '房屋树');
       const frontlist = await this.$u.api.getFront();
       const unitlist = await this.$u.api.getUnit();
-      console.log(frontlist, unitlist, "数据请求");
+      // console.log(frontlist, unitlist, "数据请求", this.houseList);
       this.guardList = frontlist
         .map((d) => Object.assign(d, { checked: false, type: "front" }))
         .concat(
@@ -170,7 +176,7 @@ export default {
             Object.assign(d, { checked: false, type: "unit" })
           )
         );
-      console.log(this.guardList);
+      console.log(this.guardList,'==', this.houseList);
     },
     checkStep(step) {
       const f = this.form;

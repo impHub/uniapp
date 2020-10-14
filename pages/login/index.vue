@@ -81,7 +81,9 @@
       </view>
     </view>
     <!--  -->
-    <view class="addRegistered" @click="addRegistered" >还没账号?<text style="color:#2979ff">去注册</text></view>
+    <view class="addRegistered" @click="addRegistered"
+      >还没账号?<text style="color: #2979ff">去注册</text></view
+    >
     <!--  -->
     <!-- <view class="buttom">
       <view class="hint">
@@ -155,13 +157,13 @@ export default {
     // this.$u.vuex('vuex_user.name', '张三')
   },
   methods: {
-    addRegistered(){
-      this.$u.route('/pages/registered/registered')
+    addRegistered() {
+      this.$u.route("/pages/registered/registered");
     },
-    goBack(){
-      console.log('goback');
+    goBack() {
+      console.log("goback");
       uni.switchTab({
-        url: '/pages/mine/index'
+        url: "/pages/mine/index",
       });
     },
     validMobile() {
@@ -183,27 +185,32 @@ export default {
       }
     },
     submit() {
+      // console.log(formData);
       this.$refs.accountForm.validate((valid) => {
         if (valid) {
+          console.log(this.form);
           this.$u.api
             .login({
+              // mobile: this.form.username,
+              // mobile: 18571510092,
               loginName: this.form.username,
               password: md5Libs.md5(this.form.password),
+              // type: false,
               villageId: this.form.villageId,
             })
             .then((data) => {
               if (Array.isArray(data) && data.length > 0) {
-                   console.log(data, "data失败");
+                console.log(data, "data失败");
                 // 登录失败
                 this.com.list = data;
                 this.com.show = true;
               } else {
                 this.$refs.uToast.show({
                   title: "登录成功",
-                  type: "success"
+                  type: "success",
                 });
                 //登录成功 后台传来用户信息值有id token 权限
-                console.log(data, "data成功");
+                console.log(data, "data登录成功");
                 // 触发vuex login方法;存储token
                 this.$u.login(data);
               }
@@ -216,7 +223,7 @@ export default {
           console.log("验证失败");
         }
       });
-    }
+    },
   },
 };
 </script>
@@ -224,7 +231,7 @@ export default {
 <style lang="scss" scoped>
 .container {
   font-size: 28rpx;
-  .addRegistered{
+  .addRegistered {
     text-align: center;
     margin-top: 30rpx;
     font-weight: 600;

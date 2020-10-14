@@ -25,7 +25,9 @@ module.exports = {
 		this.$u.login = data => {
 			// 1.存入token 2.id name 权限等 3.并且跳转到首页
 			this.$u.vuex('vuex_token', data.token)
+			// out
 			this.$u.vuex('vuex_user', {id: data.userId, name: data.userName, mobile: data.mobile})
+			// this.$u.vuex('vuex_user', {id: data.userId, name: data.nickName, mobile: data.mobile})
 			// redirectTo关闭当前页并跳转
 			this.vuex_fullPath?this.$u.route({url: this.vuex_fullPath, type:'redirectTo'}):this.$u.route({url:'/pages/mine/index', type:'switchTab'})
 		}

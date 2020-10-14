@@ -6,6 +6,7 @@ import store from '@/store'
 const loginPath = '/pages/login/index'
 const install = (Vue, vm) => {
 	Vue.prototype.$u.http.setConfig({
+		// baseUrl: 'http://192.168.1.155:9099',
 		baseUrl: 'http://121.40.201.51:9999',
 		// baseUrl: 'http://192.168.1.15:9099',
 		// baseUrl: 'http://192.168.50.192:3000/app/manage',
@@ -23,6 +24,7 @@ const install = (Vue, vm) => {
 		originalData: true, 
 		header: {
 			'content-type': 'application/json;charset=UTF-8',
+			// "content-type" : "multipart/from-data;boundary=aBoundaryString"
 		}
 	});
 	// 请求拦截，配置Token等参数
@@ -48,10 +50,13 @@ const install = (Vue, vm) => {
 	}
 	// 响应拦截，判断状态码是否通过
 	Vue.prototype.$u.http.interceptor.response = res => {
+		// console.log(res, '响应拦截1')
 		// 请求后台接口成功
 		if(res.statusCode == 200) {
+			// console.log(res, '响应拦截2')
 			// 并且后台返回登录成功码 code===0
 			if(res.data.code === 0){
+				console.log(res.data.data, '响应拦截3')
 				// console.log(res)
 				// 抛出后台数据
 				return res.data.data;
