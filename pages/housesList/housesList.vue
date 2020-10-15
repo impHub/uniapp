@@ -1,18 +1,5 @@
 <template>
-  <view>
-    <view> 当前端:{{ test }} </view>
-    <view class="wrap">
-      <u-toast ref="uToast"></u-toast>
-      <u-verification-code
-        :seconds="seconds"
-        ref="uCode"
-        @change="codeChange"
-      ></u-verification-code>
-      <u-button @tap="getCode">{{ tips }}</u-button>
-    </view>
-    <!-- 添加房屋 -->
-    <button @click="show = true">添加房屋</button>
-    <!--  -->
+  <view class="container">
     <view class="container_grid">
       <u-grid :col="3" class="houselist">
         <!-- 用户房屋数据 -->
@@ -68,6 +55,9 @@
       mode="mutil-column"
       @confirm="selectRelation"
     ></u-select>
+    <view class="actionbox">
+      <u-button type="primary" class="prev" @click="prev">返回</u-button>
+    </view>
   </view>
 </template>
 
@@ -75,13 +65,8 @@
 export default {
   data() {
     return {
-      test: "",
-      tips: "",
-      // refCode: null,
-      seconds: 10,
-      houseShow: false,
-      show: false,
-      relationShow: false,
+      show: false, // 第一层
+      relationShow: false, //第二层
       houseList: [], // 房屋树
       houseTemp: {}, //添加房屋时有两个弹出选择，先选择房屋后选择房屋关系，此处临时存储选择的房屋数据
       houseSelected: [], // 用户房屋数据
@@ -100,11 +85,6 @@ export default {
         { label: "租户", value: 3 },
       ],
     };
-  },
-  onReady() {
-    // 注意这里不能将一个组件赋值给data的一个变量，否则在微信小程序会
-    // 造成循环引用而报错，如果你想这样做，请在非data中定义refCode变量
-    // this.refCode = this.$refs.uCode;
   },
   methods: {
     getLabel(list, value) {
@@ -155,33 +135,11 @@ export default {
     async getData() {
       this.houseList = await this.$u.api.getHouse();
     },
-    // selectHouse(item) {
-    //   console.log(item, "选择");
-    // },
-    // 倒计时
-    codeChange(text) {
-      this.tips = text;
-    },
-    getCode() {
-      console.log(this.$refs.uCode.canGetCode);
-      // 获取验证码
-      if (this.$refs.uCode.canGetCode) {
-        // 开始倒计时
-        this.$refs.uCode.start();
-        // 模拟向后端请求验证码
-        // uni.showLoading({
-        //   title: "正在获取验证码",
-        // });
-        // setTimeout(() => {
-        //   uni.hideLoading();
-        //   // 这里此提示会被this.start()方法中的提示覆盖
-        //   this.$u.toast("验证码已发送");
-        //   // 通知验证码组件内部开始倒计时
-
-        // }, 2000);
-      } else {
-        this.$u.toast("倒计时结束后再发送");
-      }
+    prev() { // 返回
+      uni.switchTab({
+        url: "/pages/mine/index",
+      });
+      // this.step > 0 && this.step--
     },
   },
   mounted() {
@@ -199,4 +157,89 @@ export default {
 };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss" scoped>
+.container {
+  padding-bottom: 100rpx;
+  .form-item-group {
+    background: #fff;
+    padding: 0 15rpx;
+    margin-bottom: 10rpx;
+  }
+  .u-form-item,
+  .u-cell {
+    padding: 20rpx;
+  }
+
+  .title {
+    padding: 30rpx 35rpx 10rpx 35rpx;
+    font-size: 20rpx;
+    text-align: left;
+    color: #909399;
+  }
+  .steps {
+    margin: 0 0 10rpx 0;
+    padding: 40rpx 0;
+    background: #fff;
+  }
+  .actionbox {
+    position: fixed;
+    width: 100%;
+    height: 100rpx;
+    line-height: 100rpx;
+    bottom: 0;
+    z-index: 99;
+    display: flex;
+    .u-btn {
+      flex: 1;
+      width: 100%;
+      height: 100%;
+      border-radius: 0;
+    }
+  }
+  .houselist {
+    position: relative;
+    .item {
+      height: 220rpx;
+      .close {
+        position: absolute;
+        top: 5rpx;
+        right: 5rpx;
+      }
+      .tags {
+        padding-top: 5rpx;
+        .tag {
+          margin-left: 5rpx;
+        }
+      }
+      .label {
+        font-size: 48rpx;
+      }
+      .icon {
+        font-size: 60rpx;
+      }
+      .text {
+        font-size: 28rpx;
+        margin-top: 5rpx;
+        color: $u-type-info;
+      }
+    }
+  }
+  .quickSelect {
+    margin-bottom: 10rpx;
+    .checkbox {
+      padding: 20rpx 0;
+    }
+  }
+  .guardlist {
+    width: 100%;
+    .item {
+      .checkbox {
+        width: 100%;
+        padding: 10rpx 20rpx;
+        white-space: nowrap;
+        pointer-events: none; //给外层VIEW做了click，这里相当于禁用checkbox本身的事件
+      }
+    }
+  }
+}
+</style>

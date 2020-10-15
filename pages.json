@@ -138,6 +138,15 @@
             "path" : "pages/registered/registered",
             "style" : {}
         }
+        ,{
+            "path" : "pages/housesList/housesList",
+            "style" :                                                                                    
+            {
+				"navigationBarTitleText": "房屋信息",
+				"navigationStyle": "custom"
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

@@ -47,7 +47,7 @@
 			<u-button type="success" :disabled="disabledNext" v-if="step<steps.length-1" class="next" @click="next">下一步</u-button> 
 			<u-button type="primary" :disabled="disabledNext" v-if="step===steps.length-1" class="submit" @click="submit">提交</u-button> -->
     </view>
-
+  <!-- 第二个 -->
     <u-select
       v-model="relationShow"
       :list="[propertyList, relationList]"
@@ -107,7 +107,7 @@ export default {
       updateHeader: { Authorization: this.$store.state.vuex_token },
       updateSizeType: ["compressed"],
       datePicker: false,
-      houseShow: false, // 房屋数据选择
+      houseShow: false, // 弹出
       relationShow: false,
       quickSelect: {
         front: true,
