@@ -191,12 +191,12 @@ export default {
           console.log(this.form);
           this.$u.api
             .login({
-              // mobile: this.form.username,
+              mobile: this.form.username,
               // mobile: 18571510092,
-              loginName: this.form.username,
+              // loginName: this.form.username,
               password: md5Libs.md5(this.form.password),
-              // type: false,
-              villageId: this.form.villageId,
+              type: false,
+              // villageId: this.form.villageId,
             })
             .then((data) => {
               if (Array.isArray(data) && data.length > 0) {

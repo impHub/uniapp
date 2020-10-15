@@ -6,8 +6,8 @@ import store from '@/store'
 const loginPath = '/pages/login/index'
 const install = (Vue, vm) => {
 	Vue.prototype.$u.http.setConfig({
-		// baseUrl: 'http://192.168.1.155:9099',
-		baseUrl: 'http://121.40.201.51:9999',
+		baseUrl: 'http://192.168.1.155:9099',
+		// baseUrl: 'http://121.40.201.51:9999',
 		// baseUrl: 'http://192.168.1.15:9099',
 		// baseUrl: 'http://192.168.50.192:3000/app/manage',
 		// baseUrl: 'http://172.20.10.3:3000',
@@ -29,9 +29,10 @@ const install = (Vue, vm) => {
 	});
 	// 请求拦截，配置Token等参数
 	Vue.prototype.$u.http.interceptor.request = (config) => {
-		console.log('Vue.prototype.$u.http.interceptor.request');
+		console.log('Vue.prototype.$u.http.interceptor.request', config);
 		// store.commit('carriedLogout', 996)
 		let apiinfo = Object.values(APIMAP).filter(api => api[1] === config.url)
+		console.log(apiinfo)
 		if(apiinfo.length <= 0){
 			console.log('API不存在，取消请求')
 			config = false
@@ -50,16 +51,16 @@ const install = (Vue, vm) => {
 	}
 	// 响应拦截，判断状态码是否通过
 	Vue.prototype.$u.http.interceptor.response = res => {
-		// console.log(res, '响应拦截1')
+		console.log(res, '响应拦截1')
 		// 请求后台接口成功
 		if(res.statusCode == 200) {
 			// console.log(res, '响应拦截2')
 			// 并且后台返回登录成功码 code===0
 			if(res.data.code === 0){
-				console.log(res.data.data, '响应拦截3')
+				console.log(res.data, '响应拦截3')
 				// console.log(res)
 				// 抛出后台数据
-				return res.data.data;
+				return res.data;
 			}else{
 				// 账号密码错误时
 				vm.$u.toast(`${res.data.msg||''}`);

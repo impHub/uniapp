@@ -95,7 +95,7 @@ export default {
           dec: "",
           bgcolor: "bg-pink",
           disabled: false,
-          url: "/pages/testdemo/testdemo",
+          url: "/pages/housesList/housesList",
         },
         {
           id: 6,

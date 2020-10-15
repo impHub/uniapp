@@ -29,9 +29,6 @@
 		},
 		onLoad() {
 		},
-		methods: {
-			
-		}
 	}
 </script>
 

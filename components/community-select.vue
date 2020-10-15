@@ -6,8 +6,8 @@
       <u-icon name="arrow-down" size="22"></u-icon>
     </view>
     <u-select
-	 value-name='id'
-	 label-name='name'
+      value-name="villageId"
+      label-name="name"
       v-model="show"
       :list="list"
       @confirm="changeCommunity"
@@ -23,7 +23,7 @@ export default {
   data() {
     return {
       show: false,
-      list :[
+      list: [
         {
           id: "1",
           name: "小区A",
@@ -33,44 +33,24 @@ export default {
           name: "小区B",
         },
       ],
-      actionSheetList: [
-        {
-          value: 1,
-          label: "男",
-        },
-        {
-          value: 2,
-          label: "女",
-        },
-        {
-          value: 3,
-          label: "保密",
-        },
-        {
-          value: 4,
-          label: "男",
-        },
-        {
-          value: 5,
-          label: "女",
-        },
-        {
-          value: 6,
-          label: "保密",
-        },
-      ],
     };
   },
-  computed:{
-    communityName(){
-      console.log('计算');
-      return this.$store.state.vuex_community
-    }
+  computed: {
+    communityName() {
+      console.log("计算");
+      return this.$store.state.vuex_community;
+    },
   },
   mounted() {
-    // this.getData();
+    this.getData();
   },
   methods: {
+    getData() {
+      this.$u.api.infoVillage().then((res) => {
+        console.log(res.data);
+        this.list = res.data;
+      });
+    },
     // getData() {
     //   let ;
     //   this.list = data.map((d) => {
@@ -79,10 +59,19 @@ export default {
     //   });
     //   this.changeCommunity(0);
     // },
+    // 切换小区
     changeCommunity(item) {
-    this.$store.commit('community', item[0])
-	// 	console.log(index)
-    //   this.$u.vuex("vuex_community", this.list[index]);
+      console.log(item[0]);
+      const data = item[0]
+      uni.request({
+        url: `http://192.168.1.155:9099/infoVillage/change/${data.value}`, //仅为示例，并非真实接口地址。
+        success: (res) => {
+            console.log(res.data)
+        },
+      });
+      this.$store.commit("community", data);
+      // 	console.log(index)
+      //   this.$u.vuex("vuex_community", this.list[index]);
     },
   },
 };

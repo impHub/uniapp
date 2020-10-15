@@ -72,12 +72,12 @@ export default {
       houseSelected: [], // 用户房屋数据
       // 固定数据
       relationList: [
-        { label: "本人", value: 0 },
-        { label: "子女", value: 1 },
-        { label: "父母", value: 2 },
-        { label: "亲属", value: 3 },
-        { label: "朋友", value: 4 },
-        { label: "其它", value: 5 },
+        { label: "本人", value: 1 },
+        { label: "子女", value: 2 },
+        { label: "父母", value: 3 },
+        { label: "亲属", value: 4 },
+        { label: "朋友", value: 5 },
+        { label: "其它", value: 6 },
       ],
       propertyList: [
         { label: "业主", value: 1 },
@@ -103,6 +103,7 @@ export default {
       this.houseTemp.relation = data[1].value;
       // 把临时数据添加搭配总数据里; 顺便清空
       this.houseSelected.push(this.houseTemp);
+      console.log(this.houseSelected, '用户房屋数据')
       this.houseTemp = {};
     },
     // 添加是点击第一个确认触发,会判断这个房屋是否添加
@@ -133,7 +134,10 @@ export default {
       }
     },
     async getData() {
-      this.houseList = await this.$u.api.getHouse();
+      const { data: rooms } = await this.$u.api.getRooms()
+      const { data: houses } = await this.$u.api.getHouse();
+      this.houseList = houses
+      console.log(this.houseList, rooms)
     },
     prev() { // 返回
       uni.switchTab({
@@ -144,15 +148,6 @@ export default {
   },
   mounted() {
     this.getData();
-    console.log(navigator.userAgent.toLowerCase());
-    let userAgent = navigator.userAgent.toLowerCase();
-    if (userAgent.match(/Alipay/i) == "alipay") {
-      this.test = "支付宝";
-    } else if (userAgent.match(/MicroMessenger/i) == "micromessenger") {
-      this.test = "微信";
-    } else {
-      this.test = "H5";
-    }
   },
 };
 </script>

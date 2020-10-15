@@ -1,5 +1,6 @@
 <template>
   <view class="container">
+    <!-- 和默认header不能共存 -->
     <u-navbar
       :custom-back="goBack"
       back-text="个人中心"
@@ -168,25 +169,37 @@ export default {
     codeChange(text) {
       this.tips = text;
     },
-    getCode() {
-      let phone = 1761273590
-          console.log((/^1[3456789]\d{9}$/.test(this.form.phoneNumber)))
-        
+    async getCode() {
+      let phone = 1761273590;
+      console.log(/^1[3456789]\d{9}$/.test(this.form.phoneNumber));
+
       console.log(this.$refs.uCode.canGetCode);
       // 获取验证码
-      if (this.$refs.uCode.canGetCode && (/^1[3456789]\d{9}$/.test(this.form.phoneNumber))) {
+      if (
+        this.$refs.uCode.canGetCode &&
+        /^1[3456789]\d{9}$/.test(this.form.phoneNumber)
+      ) {
+        console.log("开始倒计时");
         // 开始倒计时
         this.$refs.uCode.start();
-        // 模拟向后端请求验证码
-        uni.showLoading({
-          title: "正在获取验证码",
+        uni.request({
+          url: `http://192.168.1.155:9099/message/${this.form.phoneNumber}`, //仅为示例，并非真实接口地址。
+          success: (res) => {
+            // 模拟向后端请求验证码
+            uni.showLoading({
+              title: "正在获取验证码",
+            });
+            setTimeout(() => {
+              uni.hideLoading();
+              // 这里此提示会被this.start()方法中的提示覆盖
+              this.$u.toast("验证码已发送");
+              // 通知验证码组件内部开始倒计时
+            }, 1000);
+            console.log(res.data.code, "验证码");
+            // this.form.verificationCode = res.data.code;
+          },
         });
-        setTimeout(() => {
-          uni.hideLoading();
-          // 这里此提示会被this.start()方法中的提示覆盖
-          this.$u.toast("验证码已发送");
-          // 通知验证码组件内部开始倒计时
-        }, 1000);
+        // console.log(res, '验证码')
       } else {
         // this.$u.toast("倒计时结束后再发送");
       }
@@ -217,10 +230,29 @@ export default {
     },
     // 注册
     registered() {
+      console.log(this.form);
       this.$refs.accountForm.validate((valid) => {
         // 全部通过校验
         if (valid) {
           // 请求后台接口1.完成注册(跳转登录);2.失败(1.已注册(跳转重置密码)2.其他)
+          this.$u.api
+            .register({
+              mobile: this.form.phoneNumber,
+              password: md5Libs.md5(this.form.password),
+              verCode: this.form.verificationCode,
+            })
+            .then((res) => {
+              console.log("注册成功");
+              uni.showLoading({
+                title: "请稍后",
+              });
+              setTimeout(() => {
+                uni.hideLoading();
+                // 这里此提示会被this.start()方法中的提示覆盖
+                this.$u.toast("注册成功");
+                this.$u.route("/pages/login/index");
+              }, 1000);
+            });
         }
       });
     },
@@ -266,13 +298,13 @@ export default {
 <style lang="scss" scoped>
 .container {
   font-size: 28rpx;
-   /deep/.uni-input-input{
+  /deep/.uni-input-input {
     background-color: white;
   }
-  /deep/ .u-btn{
+  /deep/ .u-btn {
     font-size: 26rpx;
   }
-  .container_verificationCode{
+  .container_verificationCode {
     width: 160rpx;
     font-size: 12rpx;
   }

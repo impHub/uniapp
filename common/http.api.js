@@ -13,7 +13,11 @@ const APIMAP = {
 	openDoor: ['post', '/openDoor'],
 	// http://192.168.1.155:9099接口列表
 	login: ['post', '/login', false], // 登录
-	getHouse: ['get', '/infoVillage/tree'] //房屋信息
+	getHouse: ['get', '/infoVillage/tree'], // 房屋信息
+	getRooms: ['get', '/infoResident/rooms'], // 用户房屋信息
+	register: ['post', '/appUser/register', false], // 注册
+	message: ['get', '/message', false], // 验证码
+	infoVillage: ['get', '/infoVillage/list'], // 获取小区列表
 }
 export {APIMAP}	// 提供给拦截器判断验证是否需要token
 export default {
