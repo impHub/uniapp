@@ -1,7 +1,7 @@
 <template>
   <view class="container">
     <!-- <u-steps :list="steps" :current="step" active-color="#1cbbb4" mode="number" class="steps"></u-steps> -->
-    <view v-show="step === 0">
+    <view>
       <view class="form-item-group">
         <u-form-item label="图片上传" label-position="top">
           <view class="form_tag">
@@ -128,13 +128,6 @@
 
     <view class="actionbox">
       <u-button type="warning" class="prev" @click="dropOut">返回</u-button>
-      <!-- <u-button
-        type="success"
-        :disabled="disabledNext"
-        class="next"
-        @click="next"
-        >下一步</u-button
-      > -->
       <u-button
         type="success"
         :disabled="disabledNext"
@@ -143,116 +136,25 @@
         >提交</u-button
       >
     </view>
-
-    <!-- <u-select
-      v-model="relationShow"
-      :list="[propertyList, relationList]"
-      mode="mutil-column"
-      @confirm="selectRelation"
-    ></u-select>
-    <u-select
-      v-model="houseShow"
-      :list="houseList"
-      mode="mutil-column-auto"
-      label-name="name"
-      value-name="id"
-      @confirm="selectHouse"
-    ></u-select> -->
   </view>
 </template>
 
 <script>
 export default {
-  onShow() {
-    // 鉴权1 触发vuex
-    console.log(this.$route.fullPath, "hahhahah");
-    this.$u.auth(this.$route.fullPath);
-  },
   data() {
-    const params = {
-      name: "",
-      sex: "",
-      idCard: "",
-      birth: "",
-      address: "",
-      nation: "",
-      validStart: "",
-      validEnd: "",
-      cardOrg: "",
-      cardFront: "",
-      cardOpposite: "",
-      avatar: "",
-
-      mobile: "",
-
-      residentRooms: [],
-      deviceAddressIds: [],
-    };
     return {
-      certification: "未认证",
-      steps: [
-        { name: "基本信息" },
-        { name: "上传图片" },
-        { name: "选择房屋" },
-        { name: "门禁授权" },
-      ],
-      step: 0,
-
+      form: {},
+      certification: "未认证", //审核认证状态
+      // 上传图片服务器地址
       updateActionImg: this.$u.http.config.baseUrl + "/upload/img",
+      // 身份证图上传地址
       updateActionOcr: this.$u.http.config.baseUrl + "/upload/ocr",
-      updateHeader: { Authorization: this.$store.state.vuex_token },
+      //   original 原图，compressed 压缩图，默认二者都有，H5无效
       updateSizeType: ["compressed"],
-      datePicker: false,
-      houseShow: false,
-      relationShow: false,
-      quickSelect: {
-        front: true,
-        unit: false,
-        own: true,
-      },
-      relationList: [
-        { label: "子女", value: 1 },
-        { label: "父母", value: 2 },
-        { label: "亲属", value: 3 },
-        { label: "朋友", value: 4 },
-        { label: "其它", value: 5 },
-      ],
-      propertyList: [
-        { label: "业主", value: 1 },
-        { label: "家庭成员", value: 2 },
-        { label: "租户", value: 3 },
-      ],
-      guardList: [],
-      houseList: [],
-      form: Object.assign({}, params),
-      defForm: Object.assign({}, params),
-      houseSelected: [], // {id: '101012501', name: '2501', buildId: 1, buildName: '第1栋', unitId: 1, unitName: '第1单元', property: 1, relation: 1}
-      houseTemp: {}, //添加房屋时有两个弹出选择，先选择房屋后选择房屋关系，此处临时存储选择的房屋数据
+      //   上传携带的头信息，对象形式
+      updateHeader: { Authorization: this.$store.state.vuex_token },
+      disabledNext: false,
     };
-  },
-  watch: {
-    houseSelected: {
-      handler: "changeHouse",
-    },
-    quickSelect: {
-      deep: true,
-      immediate: true,
-      handler: "changeQuick",
-    },
-    guardList: {
-      deep: true,
-      immediate: true,
-      handler: "changeGuard",
-    },
-  },
-  computed: {
-    disabledNext() {
-      return !this.checkStep(this.step);
-    },
-  },
-  mounted() {
-    //鉴权2 数据请求触发api拦截器
-    this.getData();
   },
   methods: {
     dropOut() {
@@ -260,57 +162,7 @@ export default {
         url: "/pages/mine/index",
       });
     },
-    async getData() {
-      this.houseList = await this.$u.api.getHouse();
-      const frontlist = await this.$u.api.getFront();
-      const unitlist = await this.$u.api.getUnit();
-      this.guardList = frontlist
-        .map((d) => Object.assign(d, { checked: false, type: "front" }))
-        .concat(
-          unitlist.map((d) =>
-            Object.assign(d, { checked: false, type: "unit" })
-          )
-        );
-    },
-    checkStep(step) {
-      const f = this.form;
-      if (step === 0) {
-        // return true
-        return this.$u.test.mobile(f.mobile);
-      } else if (step === 1) {
-        // return true
-        return [
-          f.name,
-          f.sex,
-          f.idCard,
-          f.birth,
-          f.nation,
-          f.address,
-          f.validStart,
-          f.validEnd,
-          f.cardOrg,
-          f.avatar,
-          f.cardFront,
-          f.cardOpposite,
-        ].reduce((x, y) => x && y && y.length > 0, true);
-      } else if (step === 2) {
-        // return true
-        return !!this.houseSelected.length;
-      } else if (step === 3) {
-        //提交
-        return (
-          this.checkStep(0) &&
-          this.checkStep(1) &&
-          this.checkStep(2) &&
-          !!f.deviceAddressIds.length
-        );
-      }
-      return false;
-    },
-    beforeUpload(index) {
-      uni.showLoading({ title: "正在上传……", mask: true });
-      return true;
-    },
+    // 删除图片是触发
     uploadRemove(index) {
       if (index === 2) {
         const { name, sex, nation, birth, address, idCard, imgUrl } = {};
@@ -333,20 +185,32 @@ export default {
         });
       }
     },
+    // 每个文件上传前触发的钩子回调函数
+    beforeUpload(index) {
+      uni.showLoading({ title: "正在上传……", mask: true });
+      return true;
+    },
+    // 本人照片上传成功触发
     avatarSuccess(res) {
+      console.log(res, "本人照片");
       if (res.code === 0) {
         this.form.avatar = res.data;
       }
     },
+    // 身份证人像面上传成功时触发
     oppositeSuccess(res) {
+      console.log(res, "身份证正面");
       uni.hideLoading();
-      if (res.code === 0) {
+      if (res.code !== 0) {
         const { name, sex, nation, birth, address, idCard, imgUrl } = res.data;
         if (!name || !idCard) {
           // OCR识别失败
           this.$u.toast("信息识别错误，请上传正确的图片");
           this.$refs.uploadOpposite.remove(0);
-        } else {
+        }
+      } else {
+        const { name, sex, nation, birth, address, idCard, imgUrl } = res.data;
+        this.$nextTick((res) => {
           Object.assign(this.form, {
             name,
             sex,
@@ -356,10 +220,13 @@ export default {
             idCard,
             cardOpposite: imgUrl,
           });
-        }
+          console.log(this.form, "身份证正面true");
+        });
       }
     },
+    // 身份证国徽面成功触发
     frontSuccess(res) {
+      console.log(res, "身份证背面");
       if (res.code === 0) {
         const { cardOrg, validStart, validEnd, imgUrl } = res.data;
         if (!cardOrg || !validStart || !validEnd) {
@@ -376,120 +243,12 @@ export default {
         }
       }
     },
-    changeHouse() {
-      this.form.residentRooms = this.houseSelected.map((d) => {
-        return {
-          roomId: d.id,
-          property: d.property,
-          relationOwner: d.relation,
-        };
-      });
-      // 选择的房屋变化时，授权单元也要变化
-      this.changeQuick();
-    },
-    changeQuick() {
-      const val = this.quickSelect;
-      this.guardList.map((item) => {
-        if (item.type === "front") {
-          item.checked = val.front;
-        } else if (item.type === "unit") {
-          // 如果是已选择房屋对应的单元门禁
-          if (
-            this.houseSelected.findIndex(
-              (h) => h.buildId === item.buildId && h.unitId === item.unitId
-            ) > -1
-          ) {
-            item.checked = val.unit || val.own;
-          } else {
-            item.checked = val.unit;
-          }
-        }
-      });
-    },
-    changeGuard() {
-      this.form.deviceAddressIds = this.guardList
-        .filter((g) => g.checked === true)
-        .map((g) => g.id);
-    },
-    selectHouse(data) {
-      const [build, unit, floot, house] = data;
-      // const label = data.slice(0,2).reduce((a,b) => a.label+b.label).split('第').join('')
-      // 如果不在已选择列表中
-      if (this.houseSelected.findIndex((item) => item.id === house.value) < 0) {
-        this.houseTemp = {
-          id: house.value,
-          name: house.label,
-          buildId: build.value,
-          buildName: build.label,
-          unitId: unit.value,
-          unitName: unit.label,
-        };
-        this.relationShow = true;
-      } else {
-        this.$u.toast("该房屋已经添加");
-      }
-    },
-    selectRelation(data) {
-      this.houseTemp.property = data[0].value;
-      this.houseTemp.relation = data[1].value;
-      this.houseSelected.push(this.houseTemp);
-      this.houseTemp = {};
-    },
-    removeHouse(index) {
-      uni.showModal({
-        title: "提示",
-        content: "您确定要删除此项吗？",
-        success: (res) => {
-          if (res.confirm) {
-            this.houseSelected.splice(index, 1);
-          }
-        },
-      });
-    },
-    showRelation() {
-      document.activeElement.blur();
-      this.relationShow = true;
-    },
-    next() {
-      this.step < this.steps.length - 1 && this.step++;
-    },
-    prev() {
-      this.step > 0 && this.step--;
-    },
-    submit() {
-      uni.showModal({
-        title: "提示",
-        content: "确认提交？",
-        success: (res) => {
-          if (res.confirm) {
-            uni.showLoading({ title: "正在提交……", mask: true });
-            let params = Object.assign({}, this.form);
-            params.sex = params.sex === "男" ? 1 : 2;
-            this.$u.api.addUser(params).then((res) => {
-              uni.showModal({
-                title: "提示",
-                content: "提交成功，是否继续添加？",
-                success: (resd) => {
-                  if (resd.confirm) {
-                    this.step = 0;
-                    this.form = Object.assign({}, this.defForm);
-                  } else {
-                    this.$u.route({
-                      url: "/pages/index/index",
-                      type: "switchTab",
-                    });
-                  }
-                },
-              });
-            });
-          }
-        },
-      });
-    },
-    getLabel(list, value) {
-      const data = list.find((item) => item.value === value) || {};
-      return data.label;
-    },
+  },
+  computed: {
+    // 提交按钮是否能被点击
+    // disabledNext() {
+    //   return !this.checkStep(this.step);
+    // },
   },
 };
 </script>

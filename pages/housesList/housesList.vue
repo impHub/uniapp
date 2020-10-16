@@ -95,12 +95,20 @@ export default {
     removeHouse(index) {
       console.log(index, "删除数据");
     },
-    // 第二次点确定
+    // 第二次点确定 添加房屋
     selectRelation(data) {
-      console.log(data);
+      // console.log(data);
       // 临时存储的数据再添两个数据
       this.houseTemp.property = data[0].value;
       this.houseTemp.relation = data[1].value;
+      console.log(this.houseTemp, '新增房屋数据');
+      this.$u.api.addHouse({
+        roomId: this.houseTemp.id,
+        property: this.houseTemp.property,
+        relationOwner: this.houseTemp.relation
+      }).then(res =>{
+        console.log(res)
+      })
       // 把临时数据添加搭配总数据里; 顺便清空
       this.houseSelected.push(this.houseTemp);
       console.log(this.houseSelected, '用户房屋数据')
@@ -134,10 +142,17 @@ export default {
       }
     },
     async getData() {
-      const { data: rooms } = await this.$u.api.getRooms()
-      const { data: houses } = await this.$u.api.getHouse();
+      const { data: houses } = await this.$u.api.getHouse();// 房屋树
+      // 用户房屋信息
+       this.$u.api.getRooms()
+       .then(res => {
+         console.log(res)
+       })
+       .catch(err => {
+         console.log(err)
+       })
       this.houseList = houses
-      console.log(this.houseList, rooms)
+      // console.log(this.houseList)
     },
     prev() { // 返回
       uni.switchTab({

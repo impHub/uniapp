@@ -23,16 +23,7 @@ export default {
   data() {
     return {
       show: false,
-      list: [
-        {
-          id: "1",
-          name: "小区A",
-        },
-        {
-          id: "2",
-          name: "小区B",
-        },
-      ],
+      list: [],
     };
   },
   computed: {
@@ -49,6 +40,17 @@ export default {
       this.$u.api.infoVillage().then((res) => {
         console.log(res.data);
         this.list = res.data;
+        const id = res.data[0];
+        // 切换小区
+        uni.request({
+          url: `http://192.168.1.155:9099/infoVillage/change/${id.villageId}`,
+          header: {
+            Authorization: this.vuex_token,
+          },
+          success: (res) => {
+            console.log(res.data);
+          },
+        });
       });
     },
     // getData() {
@@ -62,11 +64,14 @@ export default {
     // 切换小区
     changeCommunity(item) {
       console.log(item[0]);
-      const data = item[0]
+      const data = item[0];
       uni.request({
-        url: `http://192.168.1.155:9099/infoVillage/change/${data.value}`, //仅为示例，并非真实接口地址。
+        url: `http://192.168.1.155:9099/infoVillage/change/${data.value}`,
+        header: {
+          Authorization: this.vuex_token,
+        },
         success: (res) => {
-            console.log(res.data)
+          console.log(res.data);
         },
       });
       this.$store.commit("community", data);

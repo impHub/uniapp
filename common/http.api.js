@@ -18,6 +18,7 @@ const APIMAP = {
 	register: ['post', '/appUser/register', false], // 注册
 	message: ['get', '/message', false], // 验证码
 	infoVillage: ['get', '/infoVillage/list'], // 获取小区列表
+	addHouse: ['post', '/infoResident/bindRoom'] //添加房屋
 }
 export {APIMAP}	// 提供给拦截器判断验证是否需要token
 export default {

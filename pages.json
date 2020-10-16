@@ -147,6 +147,14 @@
             }
             
         }
+        ,{
+            "path" : "pages/identityList/identityList",
+            "style" : {
+				"navigationBarTitleText": "身份信息",
+				"navigationStyle": "custom"
+			}
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

@@ -65,7 +65,7 @@ export default {
           icon: "heart",
           dec: "审核居民信息",
           bgcolor: "bg-blue",
-          url: "/pages/expenses/expenses",
+          url: "https://billcloud.unionpay.com/ccfront/channel/UP0000A",
         },
         // { id: 2, important: 1, label: '居民审核', icon: 'heart', dec: '审核居民信息', bgcolor: 'bg-blue', url: "http://www.baidu.com" },
         {
@@ -123,11 +123,12 @@ export default {
         },
         {
           id: 9,
-          label: "快递查询",
+          label: "快递查询test",
           icon: "gift",
           dec: "",
           bgcolor: "bg-olive",
-          url: "https://m.kuaidi100.com/app",
+          url: "/pages/identityList/identityList",
+          // url: "https://m.kuaidi100.com/app",
         },
       ],
     };
